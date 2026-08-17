@@ -41,11 +41,22 @@ jobs:
       - name: Generate audio
         run: |
           python forecast_tts.py
+          mkdir -p output
+          mv forecast.wav output/
 
       - name: Upload audio to Cloudflare R2
         run: |
           npx wrangler r2 object put afd-audio/forecast.wav \
-            --file=forecast.wav \
+            --file=output/forecast.wav \
             --remote
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: output
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
