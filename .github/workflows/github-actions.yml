@@ -1,0 +1,52 @@
+name: AFD Audio
+run-name: AFD Audio
+
+on:
+  schedule:
+    - cron: '0 12 * * *'
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y htmlq
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "pykokoro[cpu]"
+
+      - name: Fetch AFD
+        run: |
+          curl -s "https://forecast.weather.gov/product.php?site=NWS&issuedby=FFC&product=AFD&glossary=1" \
+            | htmlq 'pre.glossaryProduct' --text > afd.txt
+
+      - name: Format AFD
+        run: |
+          awk -f afd.awk afd.txt
+
+      - name: Generate audio
+        run: |
+          python forecast_tts.py
+
+      - name: Upload audio to Cloudflare R2
+        run: |
+          npx wrangler r2 object put afd-audio/forecast.wav \
+            --file=forecast.wav \
+            --remote
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
