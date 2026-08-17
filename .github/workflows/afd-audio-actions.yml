@@ -8,7 +8,13 @@ on:
 
 jobs:
   generate:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
 
     steps:
       - name: Check out repository
@@ -38,10 +44,17 @@ jobs:
         run: |
           awk -f afd.awk afd.txt
 
+      - name: Cache Kokoro model
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: kokoro-model-${{ runner.os }}-${{ hashFiles('requirements.txt') }}
+
       - name: Generate audio
+        env:
+          HF_HOME: ~/.cache/huggingface
         run: |
           python forecast_tts.py
-
       - name: Upload audio to Cloudflare R2
         run: |
           npx wrangler r2 object put afd-audio/forecast.wav \
