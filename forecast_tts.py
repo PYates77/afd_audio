@@ -4,7 +4,7 @@ from pykokoro import PipelineConfig, build_pipeline
 from pykokoro.generation_config import GenerationConfig
 
 INPUT_FILE = "key_messages.txt"
-OUTPUT_FILE = "forecast.wav"
+OUTPUT_FILE = "output/forecast.wav"
 VOICE = "bm_daniel"
 SPEED = 1.2
 #SAMPLE_RATE = 24000

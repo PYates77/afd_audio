@@ -41,8 +41,6 @@ jobs:
       - name: Generate audio
         run: |
           python forecast_tts.py
-          mkdir -p output
-          mv forecast.wav output/
 
       - name: Upload audio to Cloudflare R2
         run: |
