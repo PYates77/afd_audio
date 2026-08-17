@@ -51,6 +51,10 @@ jobs:
           HF_HOME: ~/.cache/huggingface
         run: |
           python forecast_tts.py
+
+      - name: Generate Fake RSS feed
+        run: python forecast_rss.py
+
       - name: Upload audio to Cloudflare R2
         run: |
           npx wrangler r2 object put afd-audio/forecast.wav \
