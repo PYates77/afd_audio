@@ -35,13 +35,9 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install "pykokoro[cpu]"
 
-      - name: Fetch AFD
+      - name: Fetch and Format AFD
         run: |
-          curl -s "https://forecast.weather.gov/product.php?site=NWS&issuedby=FFC&product=AFD&glossary=1" \
-            | htmlq 'pre.glossaryProduct' --text > afd.txt
-
-      - name: Format AFD
-        run: |
+          ./afd.sh
           awk -f afd.awk afd.txt
 
       - name: Cache Kokoro model
