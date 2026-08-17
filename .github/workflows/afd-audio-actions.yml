@@ -16,8 +16,7 @@ jobs:
 
       - name: Install system dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y htmlq
+          sudo snap install htmlq
 
       - name: Set up Python
         uses: actions/setup-python@v6
