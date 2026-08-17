@@ -63,3 +63,18 @@ function read_body(     para) {
     close(out)
     next
 }
+#
+# ---- LONG TERM ----
+/^\.DISCUSSION/ {
+    out = "discussion.txt"
+
+    getline            # time range
+    if ($0 ~ /^\(.*\)$/) {
+        gsub(/[()]/, "")
+        print $0 "\n" > out
+    }
+    getline            # Issued line
+    read_body()
+    close(out)
+    next
+}

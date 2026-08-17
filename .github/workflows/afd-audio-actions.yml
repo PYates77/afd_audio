@@ -38,7 +38,6 @@ jobs:
       - name: Fetch and Format AFD
         run: |
           ./afd.sh
-          awk -f afd.awk afd.txt
 
       - name: Cache Kokoro model
         uses: actions/cache@v4

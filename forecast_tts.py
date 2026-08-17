@@ -3,7 +3,8 @@ import soundfile as sf
 from pykokoro import PipelineConfig, build_pipeline
 from pykokoro.generation_config import GenerationConfig
 
-INPUT_FILE = "key_messages.txt"
+#INPUT_FILE = "key_messages.txt"
+INPUT_FILE = "discussion.txt"
 OUTPUT_FILE = "output/forecast.wav"
 VOICE = "bm_daniel"
 SPEED = 1.2
