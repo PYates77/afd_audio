@@ -3,7 +3,8 @@ run-name: AFD Audio
 
 on:
   schedule:
-    - cron: '0 12 * * *'
+    - cron: '0 4 * * *'
+      timezone: 'America/Denver'
   workflow_dispatch:
 
 jobs:
