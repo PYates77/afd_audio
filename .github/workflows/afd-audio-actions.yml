@@ -51,16 +51,13 @@ jobs:
         run: |
           python forecast_tts.py
 
-      - name: Generate Fake RSS feed
-        run: python forecast_rss.py
-
-      - name: Upload audio to Cloudflare R2
-        run: |
-          npx wrangler r2 object put afd-audio/forecast.wav \
-            --file=output/forecast.wav \
-            --remote
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      #- name: Upload audio to Cloudflare R2
+      #  run: |
+      #    npx wrangler r2 object put afd-audio/forecast.wav \
+      #      --file=output/forecast.wav \
+      #      --remote
+      #  env:
+      #    CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
