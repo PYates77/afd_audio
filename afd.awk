@@ -104,6 +104,8 @@ function read_body(para) {
             gsub(/\<sern\>/, "southern")
             gsub(/\<nrn\>/, "northern")
             gsub(/\<nern\>/, "northern")
+            gsub(/\<ern\>/, "eastern")
+            gsub(/\<wern\>/, "western")
             gsub(/\<tstms\>/, "thunderstorms")
             gsub(/\<mtns\>/, "mountains")
             gsub(/\<sfc\>/, "surface")
